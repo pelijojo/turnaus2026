@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Koulunpäättymispelit 2026</title>
+<style>
+  :root {
+    --green:      #00843D;
+    --green-deep: #00582a;
+    --green-bright:#1aa658;
+    --green-lt:   #e8f3ec;
+    --ink:        #0f0f0f;
+    --ink-2:      #1c1c1a;
+    --paper:      #f6f4ef;
+    --paper-2:    #ffffff;
+    --rule:       #e3ddd0;
+    --muted:      #7a7468;
+    --amber-lt:   #fef3c7;
+    --radius:     10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink-2);
+    color: #fff;
+    padding: 1.5rem 1rem 1.25rem;
+    text-align: center;
+    border-bottom: 4px solid var(--green);
+  }
+  header img {
+    height: 56px;
+    margin-bottom: .5rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -.01em; }
+  header h1 .accent { color: var(--green-bright); }
+  header p  { font-size: .875rem; opacity: .7; margin-top: .2rem; }
+
+  /* ── NAV TABS ── */
+  nav {
+    background: var(--ink);
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #2a2a28;
+  }
+  nav button {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,.55);
+    font-size: .875rem;
+    font-weight: 500;
+    padding: .6rem 1.1rem;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: color .15s, border-color .15s;
+    white-space: nowrap;
+  }
+  nav button:hover  { color: #fff; }
+  nav button.active { color: #fff; border-bottom-color: var(--green); }
+
+  /* ── MAIN ── */
+  main { max-width: 720px; margin: 0 auto; padding: 1.25rem 1rem 3rem; }
+  .section { display: none; }
+  .section.visible { display: block; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .card-title { font-size: 1rem; font-weight: 600; margin-bottom: .25rem; }
+  .card p { color: var(--muted); font-size: .9rem; }
+
+  /* ── FILTER ── */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-bottom: 1.25rem;
+  }
+  .filter-bar label {
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--muted);
+    align-self: center;
+    margin-right: .25rem;
+  }
+  .chip {
+    border: 1px solid var(--rule);
+    background: var(--paper-2);
+    border-radius: 999px;
+    padding: .3rem .85rem;
+    font-size: .8rem;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--ink);
+    transition: background .12s, color .12s, border-color .12s;
+  }
+  .chip:hover { background: var(--rule); }
+  .chip.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+  /* ── SCHEDULE TABLE ── */
+  .slot-block { margin-bottom: 1.25rem; }
+  .slot-header {
+    background: var(--ink-2);
+    color: #fff;
+    font-size: .8rem;
+    font-weight: 700;
+    padding: .35rem .85rem;
+    border-radius: 6px 6px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 4px solid var(--green);
+  }
+  .match-row {
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-top: none;
+    padding: .6rem .85rem;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    transition: opacity .2s;
+  }
+  .match-row:last-child { border-radius: 0 0 6px 6px; }
+  .match-row.hidden { display: none; }
+  .field-badge {
+    min-width: 48px;
+    text-align: center;
+    font-size: .72rem;
+    font-weight: 700;
+    padding: .2rem .4rem;
+    border-radius: 5px;
+    background: var(--paper);
+    color: var(--muted);
+    flex-shrink: 0;
+    border: 1px solid var(--rule);
+  }
+  .match-teams {
+    flex: 1;
+    font-size: .9rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .match-teams span { color: var(--muted); font-weight: 400; font-size: .8rem; }
+
+  /* ── TEAM VIEW ── */
+  .team-schedule { margin-top: 1rem; }
+  .team-header {
+    background: var(--ink-2);
+    color: #fff;
+    border-radius: var(--radius) var(--radius) 0 0;
+    padding: .85rem 1.1rem;
+    font-weight: 700;
+    font-size: 1.05rem;
+    border-left: 4px solid var(--green);
+  }
+  .team-game-row {
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-top: none;
+    padding: .6rem 1rem;
+    display: grid;
+    grid-template-columns: 90px 70px 1fr;
+    gap: .5rem;
+    align-items: center;
+    font-size: .875rem;
+  }
+  .team-game-row:last-of-type { border-radius: 0 0 var(--radius) var(--radius); }
+  .team-game-row .time  { color: var(--muted); font-size: .8rem; }
+  .team-game-row .field { font-weight: 600; }
+  .team-break {
+    margin-top: .5rem;
+    background: var(--green-lt);
+    border: 1px solid #86efac;
+    border-radius: 6px;
+    padding: .5rem .85rem;
+    font-size: .82rem;
+    color: var(--green-deep);
+  }
+
+  /* ── INFO SECTIONS ── */
+  .info-block {
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .info-block h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: .6rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .info-block p, .info-block li {
+    color: var(--muted);
+    font-size: .9rem;
+    margin-bottom: .3rem;
+  }
+  .info-block ul { padding-left: 1.2rem; }
+  .info-block .placeholder {
+    background: var(--paper);
+    border: 1px dashed var(--rule);
+    border-radius: 6px;
+    padding: .75rem;
+    color: var(--muted);
+    font-size: .85rem;
+    font-style: italic;
+    text-align: center;
+  }
+  .map-link {
+    display: inline-block;
+    margin-top: .5rem;
+    background: var(--green);
+    color: #fff;
+    text-decoration: none;
+    padding: .45rem 1rem;
+    border-radius: 6px;
+    font-size: .85rem;
+    font-weight: 500;
+  }
+  .map-link:hover { background: var(--green-deep); }
+
+  /* ── IMAGES ── */
+  .img-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .75rem;
+    margin-top: .75rem;
+  }
+  .img-grid img, .img-full img {
+    width: 100%;
+    border-radius: 7px;
+    border: 1px solid var(--rule);
+    display: block;
+  }
+  .img-full { margin-top: .75rem; }
+
+  /* ── SELECT ── */
+  select {
+    width: 100%;
+    padding: .55rem .8rem;
+    border: 1px solid var(--rule);
+    border-radius: 7px;
+    font-size: .9rem;
+    background: var(--paper-2);
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    font-size: .78rem;
+    color: var(--muted);
+    padding: 1.5rem 1rem;
+    border-top: 1px solid var(--rule);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <img src="https://laajasalonpalloseura.fi/wp-content/uploads/2021/11/LPS-LOGO-ILMAN-TAUSTAA.png" alt="LPS logo" />
+  <h1>Koulunpäättymispelit <span class="accent">2026</span></h1>
+  <p>Eka luokka ohi &nbsp;·&nbsp; Reilusti Parempi Saari Areena &nbsp;·&nbsp; sunnuntai 31.5.2026</p>
+</header>
+
+<nav>
+  <button class="active" onclick="showTab('ohjelma', this)">Otteluohjelma</button>
+  <button onclick="showTab('joukkue', this)">Joukkueeni</button>
+  <button onclick="showTab('saannot', this)">Säännöt</button>
+  <button onclick="showTab('info', this)">Julkiset &amp; parkkeeraus</button>
+  <button onclick="showTab('buffa', this)">Buffa</button>
+</nav>
+
+<main>
+
+  <!-- ══ OTTELUOHJELMA ══ -->
+  <section id="ohjelma" class="section visible">
+    <div class="filter-bar">
+      <label>Lohko:</label>
+      <button class="chip active" onclick="filterLohko('kaikki', this)">Kaikki</button>
+      <button class="chip" onclick="filterLohko('Kilpa', this)">Kilpa</button>
+      <button class="chip" onclick="filterLohko('Haaste', this)">Haaste</button>
+      <button class="chip" onclick="filterLohko('Harraste', this)">Harraste</button>
+    </div>
+    <div id="schedule-container"></div>
+  </section>
+
+  <!-- ══ JOUKKUEENI ══ -->
+  <section id="joukkue" class="section">
+    <div class="card">
+      <div class="card-title">Valitse joukkueesi</div>
+      <p>Näyttää oman joukkueen kaikki pelit ja tauon.</p>
+    </div>
+    <select id="team-select" onchange="renderTeam(this.value)">
+      <option value="">— Valitse joukkue —</option>
+      <optgroup label="Kilpa">
+        <option>LPS</option>
+        <option>HJK/East Sin.</option>
+        <option>HJK/Malmi Sin.</option>
+        <option>PK-35</option>
+      </optgroup>
+      <optgroup label="Haaste">
+        <option>LPS/Musta</option>
+        <option>PK-35/Punainen</option>
+        <option>MPS</option>
+        <option>HPS/Vihreä</option>
+      </optgroup>
+      <optgroup label="Harraste">
+        <option>LPS/Vihreä</option>
+        <option>HPS/Valkoinen</option>
+        <option>PK-35/Musta</option>
+        <option>HJK/Malmi Kelt.</option>
+      </optgroup>
+    </select>
+    <div id="team-output"></div>
+  </section>
+
+  <!-- ══ SÄÄNNÖT ══ -->
+  <section id="saannot" class="section">
+    <div class="info-block">
+      <h3><span>⏱️</span> Peliaika</h3>
+      <p><strong>20 minuuttia</strong> per peli (ei jatkoaikaa tai taukoa).</p>
+    </div>
+    <div class="info-block">
+      <h3><span>⚽</span> Pelitapa</h3>
+      <ul>
+        <li><strong>Sivurajakuljetus</strong></li>
+        <li><strong>Kulmakuljetus</strong></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══ JULKISET & PARKKEERAUS ══ -->
+  <section id="info" class="section">
+    <div class="info-block">
+      <h3><span>📍</span> Kenttäalue</h3>
+      <p><strong>Saari Areena</strong><br>Sarvastonkaari 23, Helsinki</p>
+      <br/>
+      <a class="map-link" href="https://maps.app.goo.gl/RTGj2quXRZsoRh187" target="_blank">Avaa kartalla</a>
+    </div>
+    <div class="info-block">
+      <h3><span>🅿️</span> Parkkeeraus</h3>
+      <p>Saapuminen autolla <strong>Laajasalontieltä</strong> — katso kartan sininen reitti.</p>
+      <br/>
+      <p><strong>Turnausparkkialue:</strong><br>
+      Laajasalon peruskoulun piha<br>
+      Holmanmoisionpolku 1</p>
+      <div class="img-full">
+        <img src="parkki_kartta.jpg" alt="Saapumiskartta Saari Areenalle" />
+      </div>
+      <div class="img-full" style="margin-top:.75rem">
+        <img src="parkki_piha.jpg" alt="Turnausparkkialue Laajasalon peruskoulun pihalla" />
+      </div>
+      <br/>
+      <a class="map-link" href="https://maps.google.com/?q=Holmanmoisionpolku+1,+Helsinki" target="_blank">Parkkialue kartalla</a>
+    </div>
+    <div class="info-block">
+      <h3><span>🚌</span> Julkiset kulkuväylät</h3>
+      <p>Lähimmät bussipysäkit kentälle:</p>
+      <ul>
+        <li>Linjat <strong>84, 85, 86, 87, 88</strong> — pysäkki Laajasalontien varrella</li>
+        <li>Linja <strong>89</strong> — pysäkki lähellä Reposalmentietä</li>
+      </ul>
+      <br/>
+      <a class="map-link" href="https://reittiopas.hsl.fi/reitti//-::1.3750591!25.0580401!Sarvastonkaari%2023%2C%20Helsinki" target="_blank">Reittiopas HSL</a>
+    </div>
+    <div class="info-block">
+      <h3><span>📞</span> Yhteystiedot</h3>
+      <p><strong>Janne Järvinen</strong>, LPS<br>
+      <a href="tel:0443465867" style="color:var(--green);text-decoration:none;font-weight:500">044 346 5867</a></p>
+    </div>
+  </section>
+
+  <!-- ══ BUFFA ══ -->
+  <section id="buffa" class="section">
+    <div class="info-block" style="background:#f0fdf4; border-color:#86efac;">
+      <h3><span>🍽️</span> Buffa on auki koko turnauksen ajan!</h3>
+      <p>Löydät buffan <strong>kentän 1 tuntumassa</strong> — tule hakemaan eväät pelien välissä.</p>
+      <div class="img-grid">
+        <img src="buffa1.jpg" alt="Buffa" />
+        <img src="buffa2.jpg" alt="Buffa" />
+      </div>
+    </div>
+    <div class="info-block">
+      <h3><span>☕</span> Tarjolla</h3>
+      <ul>
+        <li>Kahvi ja muut juomat</li>
+        <li>Makeat ja suolaiset herkut</li>
+        <li>Kotitekoisia leivonnaisia</li>
+        <li>Lisää tuotteet tähän...</li>
+      </ul>
+    </div>
+    <div class="info-block">
+      <h3><span>💳</span> Maksaminen</h3>
+      <p>Maksuvaihtoehtoina <strong>MobilePay</strong> ja käteinen.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Koulunpäättymispelit 2026 &nbsp;·&nbsp; <a href="https://laajasalonpalloseura.fi" style="color:inherit">laajasalonpalloseura.fi</a>
+</footer>
+
+<script>
+const schedule = [
+  {vuoro:"1. vuoro", aika:"8:30–8:50", pelit:[
+    {t1:"LPS/Vihreä",      t2:"HPS/Valkoinen",   lohko:"Harraste", kentta:1},
+    {t1:"HJK/Malmi Sin.",  t2:"PK-35",           lohko:"Kilpa",    kentta:2},
+    {t1:"LPS",             t2:"HJK/East Sin.",   lohko:"Kilpa",    kentta:3},
+    {t1:"PK-35/Musta",     t2:"HJK/Malmi Kelt.", lohko:"Harraste", kentta:4},
+  ]},
+  {vuoro:"2. vuoro", aika:"8:55–9:15", pelit:[
+    {t1:"LPS/Musta",       t2:"PK-35/Punainen",  lohko:"Haaste",   kentta:1},
+    {t1:"HJK/East Sin.",   t2:"PK-35",           lohko:"Kilpa",    kentta:2},
+    {t1:"LPS",             t2:"HJK/Malmi Sin.",  lohko:"Kilpa",    kentta:3},
+    {t1:"MPS",             t2:"HPS/Vihreä",      lohko:"Haaste",   kentta:4},
+  ]},
+  {vuoro:"3. vuoro", aika:"9:20–9:40", pelit:[
+    {t1:"LPS/Musta",       t2:"MPS",             lohko:"Haaste",   kentta:1},
+    {t1:"PK-35/Punainen",  t2:"HPS/Vihreä",      lohko:"Haaste",   kentta:2},
+    {t1:"LPS/Vihreä",      t2:"PK-35/Musta",     lohko:"Harraste", kentta:3},
+    {t1:"HPS/Valkoinen",   t2:"HJK/Malmi Kelt.", lohko:"Harraste", kentta:4},
+  ]},
+  {vuoro:"4. vuoro", aika:"9:45–10:05", pelit:[
+    {t1:"LPS/Vihreä",      t2:"HJK/Malmi Kelt.", lohko:"Harraste", kentta:1},
+    {t1:"HJK/East Sin.",   t2:"HJK/Malmi Sin.",  lohko:"Kilpa",    kentta:2},
+    {t1:"LPS",             t2:"PK-35",           lohko:"Kilpa",    kentta:3},
+    {t1:"HPS/Valkoinen",   t2:"PK-35/Musta",     lohko:"Harraste", kentta:4},
+  ]},
+  {vuoro:"5. vuoro", aika:"10:10–10:30", pelit:[
+    {t1:"LPS/Musta",       t2:"HPS/Vihreä",      lohko:"Haaste",   kentta:1},
+    {t1:"PK-35/Punainen",  t2:"MPS",             lohko:"Haaste",   kentta:2},
+  ]},
+];
+
+const tauko = {
+  Kilpa:    "3. vuoro (9:20–9:40)",
+  Haaste:   "4. vuoro (9:45–10:05)",
+  Harraste: "2. vuoro (8:55–9:15)"
+};
+
+const lohkoMap = {
+  "LPS":"Kilpa","HJK/East Sin.":"Kilpa","HJK/Malmi Sin.":"Kilpa","PK-35":"Kilpa",
+  "LPS/Musta":"Haaste","PK-35/Punainen":"Haaste","MPS":"Haaste","HPS/Vihreä":"Haaste",
+  "LPS/Vihreä":"Harraste","HPS/Valkoinen":"Harraste","PK-35/Musta":"Harraste","HJK/Malmi Kelt.":"Harraste"
+};
+
+function buildSchedule(filter) {
+  const container = document.getElementById('schedule-container');
+  container.innerHTML = '';
+  schedule.forEach(slot => {
+    const visibleGames = filter === 'kaikki' ? slot.pelit : slot.pelit.filter(p => p.lohko === filter);
+    if (visibleGames.length === 0) return;
+    const block = document.createElement('div');
+    block.className = 'slot-block';
+    const hdr = document.createElement('div');
+    hdr.className = 'slot-header';
+    hdr.innerHTML = `<span>${slot.vuoro}</span><span>${slot.aika}</span>`;
+    block.appendChild(hdr);
+    visibleGames.forEach(p => {
+      const row = document.createElement('div');
+      row.className = 'match-row';
+      row.innerHTML = `
+        <div class="field-badge">Kenttä ${p.kentta}</div>
+        <div class="match-teams">${p.t1} <span>vs</span> ${p.t2}</div>
+      `;
+      block.appendChild(row);
+    });
+    container.appendChild(block);
+  });
+}
+
+function filterLohko(lohko, btn) {
+  document.querySelectorAll('.filter-bar .chip').forEach(c => { c.className = 'chip'; });
+  btn.className = 'chip active';
+  buildSchedule(lohko);
+}
+
+function renderTeam(team) {
+  const out = document.getElementById('team-output');
+  if (!team) { out.innerHTML = ''; return; }
+  const lohko = lohkoMap[team];
+  const games = [];
+  schedule.forEach(slot => {
+    slot.pelit.forEach(p => {
+      if (p.t1 === team || p.t2 === team) {
+        games.push({aika: slot.aika, kentta: p.kentta, opp: p.t1 === team ? p.t2 : p.t1, vuoro: slot.vuoro});
+      }
+    });
+  });
+  games.sort((a,b) => a.vuoro.localeCompare(b.vuoro));
+
+  let html = `<div class="team-schedule">
+    <div class="team-header">${team} &nbsp;<small style="font-weight:400;opacity:.6">${lohko}</small></div>`;
+  games.forEach(g => {
+    html += `<div class="team-game-row">
+      <span class="time">${g.aika}</span>
+      <span class="field">Kenttä ${g.kentta}</span>
+      <span>vs ${g.opp}</span>
+    </div>`;
+  });
+  html += `</div>
+  <div class="team-break">Tauko: ${tauko[lohko]}</div>`;
+  out.innerHTML = html;
+}
+
+function showTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  document.getElementById(id).classList.add('visible');
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+buildSchedule('kaikki');
+</script>
+</body>
+</html>
