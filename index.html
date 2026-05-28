@@ -16,7 +16,6 @@
     --paper-2:    #ffffff;
     --rule:       #e3ddd0;
     --muted:      #7a7468;
-    --amber-lt:   #fef3c7;
     --radius:     10px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,7 +27,6 @@
     line-height: 1.6;
   }
 
-  /* ── HEADER ── */
   header {
     background: var(--ink-2);
     color: #fff;
@@ -47,7 +45,6 @@
   header h1 .accent { color: var(--green-bright); }
   header p  { font-size: .875rem; opacity: .7; margin-top: .2rem; }
 
-  /* ── NAV TABS ── */
   nav {
     background: var(--ink);
     display: flex;
@@ -70,12 +67,10 @@
   nav button:hover  { color: #fff; }
   nav button.active { color: #fff; border-bottom-color: var(--green); }
 
-  /* ── MAIN ── */
   main { max-width: 720px; margin: 0 auto; padding: 1.25rem 1rem 3rem; }
   .section { display: none; }
   .section.visible { display: block; }
 
-  /* ── CARDS ── */
   .card {
     background: var(--paper-2);
     border: 1px solid var(--rule);
@@ -86,7 +81,6 @@
   .card-title { font-size: 1rem; font-weight: 600; margin-bottom: .25rem; }
   .card p { color: var(--muted); font-size: .9rem; }
 
-  /* ── FILTER ── */
   .filter-bar {
     display: flex;
     flex-wrap: wrap;
@@ -114,7 +108,6 @@
   .chip:hover { background: var(--rule); }
   .chip.active { background: var(--ink); color: #fff; border-color: var(--ink); }
 
-  /* ── SCHEDULE TABLE ── */
   .slot-block { margin-bottom: 1.25rem; }
   .slot-header {
     background: var(--ink-2);
@@ -136,10 +129,8 @@
     display: flex;
     align-items: center;
     gap: .75rem;
-    transition: opacity .2s;
   }
   .match-row:last-child { border-radius: 0 0 6px 6px; }
-  .match-row.hidden { display: none; }
   .field-badge {
     min-width: 48px;
     text-align: center;
@@ -160,7 +151,6 @@
   }
   .match-teams span { color: var(--muted); font-weight: 400; font-size: .8rem; }
 
-  /* ── TEAM VIEW ── */
   .team-schedule { margin-top: 1rem; }
   .team-header {
     background: var(--ink-2);
@@ -195,7 +185,6 @@
     color: var(--green-deep);
   }
 
-  /* ── INFO SECTIONS ── */
   .info-block {
     background: var(--paper-2);
     border: 1px solid var(--rule);
@@ -217,16 +206,6 @@
     margin-bottom: .3rem;
   }
   .info-block ul { padding-left: 1.2rem; }
-  .info-block .placeholder {
-    background: var(--paper);
-    border: 1px dashed var(--rule);
-    border-radius: 6px;
-    padding: .75rem;
-    color: var(--muted);
-    font-size: .85rem;
-    font-style: italic;
-    text-align: center;
-  }
   .map-link {
     display: inline-block;
     margin-top: .5rem;
@@ -240,22 +219,20 @@
   }
   .map-link:hover { background: var(--green-deep); }
 
-  /* ── IMAGES ── */
+  .img-full { margin-top: .75rem; }
+  .img-full img, .img-grid img {
+    width: 100%;
+    border-radius: 7px;
+    border: 1px solid var(--rule);
+    display: block;
+  }
   .img-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: .75rem;
     margin-top: .75rem;
   }
-  .img-grid img, .img-full img {
-    width: 100%;
-    border-radius: 7px;
-    border: 1px solid var(--rule);
-    display: block;
-  }
-  .img-full { margin-top: .75rem; }
 
-  /* ── SELECT ── */
   select {
     width: 100%;
     padding: .55rem .8rem;
@@ -267,7 +244,6 @@
     margin-bottom: 1rem;
   }
 
-  /* ── FOOTER ── */
   footer {
     text-align: center;
     font-size: .78rem;
@@ -288,8 +264,7 @@
 <nav>
   <button class="active" onclick="showTab('ohjelma', this)">Otteluohjelma</button>
   <button onclick="showTab('joukkue', this)">Joukkueeni</button>
-  <button onclick="showTab('saannot', this)">Säännöt</button>
-  <button onclick="showTab('info', this)">Julkiset &amp; parkkeeraus</button>
+  <button onclick="showTab('info', this)">Parkkeeraus ja julkinen liikenne</button>
   <button onclick="showTab('buffa', this)">Buffa</button>
 </nav>
 
@@ -300,9 +275,9 @@
     <div class="filter-bar">
       <label>Lohko:</label>
       <button class="chip active" onclick="filterLohko('kaikki', this)">Kaikki</button>
-      <button class="chip" onclick="filterLohko('Kilpa', this)">Kilpa</button>
-      <button class="chip" onclick="filterLohko('Haaste', this)">Haaste</button>
-      <button class="chip" onclick="filterLohko('Harraste', this)">Harraste</button>
+      <button class="chip" onclick="filterLohko('A', this)">A</button>
+      <button class="chip" onclick="filterLohko('B', this)">B</button>
+      <button class="chip" onclick="filterLohko('C', this)">C</button>
     </div>
     <div id="schedule-container"></div>
   </section>
@@ -315,19 +290,19 @@
     </div>
     <select id="team-select" onchange="renderTeam(this.value)">
       <option value="">— Valitse joukkue —</option>
-      <optgroup label="Kilpa">
+      <optgroup label="Lohko A">
         <option>LPS</option>
         <option>HJK/East Sin.</option>
         <option>HJK/Malmi Sin.</option>
         <option>PK-35</option>
       </optgroup>
-      <optgroup label="Haaste">
+      <optgroup label="Lohko B">
         <option>LPS/Musta</option>
         <option>PK-35/Punainen</option>
         <option>MPS</option>
         <option>HPS/Vihreä</option>
       </optgroup>
-      <optgroup label="Harraste">
+      <optgroup label="Lohko C">
         <option>LPS/Vihreä</option>
         <option>HPS/Valkoinen</option>
         <option>PK-35/Musta</option>
@@ -337,22 +312,7 @@
     <div id="team-output"></div>
   </section>
 
-  <!-- ══ SÄÄNNÖT ══ -->
-  <section id="saannot" class="section">
-    <div class="info-block">
-      <h3><span>⏱️</span> Peliaika</h3>
-      <p><strong>20 minuuttia</strong> per peli (ei jatkoaikaa tai taukoa).</p>
-    </div>
-    <div class="info-block">
-      <h3><span>⚽</span> Pelitapa</h3>
-      <ul>
-        <li><strong>Sivurajakuljetus</strong></li>
-        <li><strong>Kulmakuljetus</strong></li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ══ JULKISET & PARKKEERAUS ══ -->
+  <!-- ══ PARKKEERAUS ══ -->
   <section id="info" class="section">
     <div class="info-block">
       <h3><span>📍</span> Kenttäalue</h3>
@@ -370,14 +330,14 @@
       <div class="img-full">
         <img src="parkki_kartta.jpg" alt="Saapumiskartta Saari Areenalle" />
       </div>
-      <div class="img-full" style="margin-top:.75rem">
+      <div class="img-full">
         <img src="parkki_piha.jpg" alt="Turnausparkkialue Laajasalon peruskoulun pihalla" />
       </div>
       <br/>
       <a class="map-link" href="https://maps.google.com/?q=Holmanmoisionpolku+1,+Helsinki" target="_blank">Parkkialue kartalla</a>
     </div>
     <div class="info-block">
-      <h3><span>🚌</span> Julkiset kulkuväylät</h3>
+      <h3><span>🚌</span> Julkinen liikenne</h3>
       <p>Lähimmät bussipysäkit kentälle:</p>
       <ul>
         <li>Linjat <strong>84, 85, 86, 87, 88</strong> — pysäkki Laajasalontien varrella</li>
@@ -398,9 +358,8 @@
     <div class="info-block" style="background:#f0fdf4; border-color:#86efac;">
       <h3><span>🍽️</span> Buffa on auki koko turnauksen ajan!</h3>
       <p>Löydät buffan <strong>kentän 1 tuntumassa</strong> — tule hakemaan eväät pelien välissä.</p>
-      <div class="img-grid">
+      <div class="img-full">
         <img src="buffa1.jpg" alt="Buffa" />
-        <img src="buffa2.jpg" alt="Buffa" />
       </div>
     </div>
     <div class="info-block">
@@ -408,8 +367,6 @@
       <ul>
         <li>Kahvi ja muut juomat</li>
         <li>Makeat ja suolaiset herkut</li>
-        <li>Kotitekoisia leivonnaisia</li>
-        <li>Lisää tuotteet tähän...</li>
       </ul>
     </div>
     <div class="info-block">
@@ -427,60 +384,60 @@
 <script>
 const schedule = [
   {vuoro:"1. vuoro", aika:"8:30–8:50", pelit:[
-    {t1:"LPS/Vihreä",      t2:"HPS/Valkoinen",   lohko:"Harraste", kentta:1},
-    {t1:"HJK/Malmi Sin.",  t2:"PK-35",           lohko:"Kilpa",    kentta:2},
-    {t1:"LPS",             t2:"HJK/East Sin.",   lohko:"Kilpa",    kentta:3},
-    {t1:"PK-35/Musta",     t2:"HJK/Malmi Kelt.", lohko:"Harraste", kentta:4},
+    {t1:"LPS/Vihreä",      t2:"HPS/Valkoinen",   lohko:"C", kentta:1},
+    {t1:"HJK/Malmi Sin.",  t2:"PK-35",           lohko:"A", kentta:2},
+    {t1:"LPS",             t2:"HJK/East Sin.",   lohko:"A", kentta:3},
+    {t1:"PK-35/Musta",     t2:"HJK/Malmi Kelt.", lohko:"C", kentta:4},
   ]},
   {vuoro:"2. vuoro", aika:"8:55–9:15", pelit:[
-    {t1:"LPS/Musta",       t2:"PK-35/Punainen",  lohko:"Haaste",   kentta:1},
-    {t1:"HJK/East Sin.",   t2:"PK-35",           lohko:"Kilpa",    kentta:2},
-    {t1:"LPS",             t2:"HJK/Malmi Sin.",  lohko:"Kilpa",    kentta:3},
-    {t1:"MPS",             t2:"HPS/Vihreä",      lohko:"Haaste",   kentta:4},
+    {t1:"LPS/Musta",       t2:"PK-35/Punainen",  lohko:"B", kentta:1},
+    {t1:"HJK/East Sin.",   t2:"PK-35",           lohko:"A", kentta:2},
+    {t1:"LPS",             t2:"HJK/Malmi Sin.",  lohko:"A", kentta:3},
+    {t1:"MPS",             t2:"HPS/Vihreä",      lohko:"B", kentta:4},
   ]},
   {vuoro:"3. vuoro", aika:"9:20–9:40", pelit:[
-    {t1:"LPS/Musta",       t2:"MPS",             lohko:"Haaste",   kentta:1},
-    {t1:"PK-35/Punainen",  t2:"HPS/Vihreä",      lohko:"Haaste",   kentta:2},
-    {t1:"LPS/Vihreä",      t2:"PK-35/Musta",     lohko:"Harraste", kentta:3},
-    {t1:"HPS/Valkoinen",   t2:"HJK/Malmi Kelt.", lohko:"Harraste", kentta:4},
+    {t1:"LPS/Musta",       t2:"MPS",             lohko:"B", kentta:1},
+    {t1:"PK-35/Punainen",  t2:"HPS/Vihreä",      lohko:"B", kentta:2},
+    {t1:"LPS/Vihreä",      t2:"PK-35/Musta",     lohko:"C", kentta:3},
+    {t1:"HPS/Valkoinen",   t2:"HJK/Malmi Kelt.", lohko:"C", kentta:4},
   ]},
   {vuoro:"4. vuoro", aika:"9:45–10:05", pelit:[
-    {t1:"LPS/Vihreä",      t2:"HJK/Malmi Kelt.", lohko:"Harraste", kentta:1},
-    {t1:"HJK/East Sin.",   t2:"HJK/Malmi Sin.",  lohko:"Kilpa",    kentta:2},
-    {t1:"LPS",             t2:"PK-35",           lohko:"Kilpa",    kentta:3},
-    {t1:"HPS/Valkoinen",   t2:"PK-35/Musta",     lohko:"Harraste", kentta:4},
+    {t1:"LPS/Vihreä",      t2:"HJK/Malmi Kelt.", lohko:"C", kentta:1},
+    {t1:"HJK/East Sin.",   t2:"HJK/Malmi Sin.",  lohko:"A", kentta:2},
+    {t1:"LPS",             t2:"PK-35",           lohko:"A", kentta:3},
+    {t1:"HPS/Valkoinen",   t2:"PK-35/Musta",     lohko:"C", kentta:4},
   ]},
   {vuoro:"5. vuoro", aika:"10:10–10:30", pelit:[
-    {t1:"LPS/Musta",       t2:"HPS/Vihreä",      lohko:"Haaste",   kentta:1},
-    {t1:"PK-35/Punainen",  t2:"MPS",             lohko:"Haaste",   kentta:2},
+    {t1:"LPS/Musta",       t2:"HPS/Vihreä",      lohko:"B", kentta:1},
+    {t1:"PK-35/Punainen",  t2:"MPS",             lohko:"B", kentta:2},
   ]},
 ];
 
 const tauko = {
-  Kilpa:    "3. vuoro (9:20–9:40)",
-  Haaste:   "4. vuoro (9:45–10:05)",
-  Harraste: "2. vuoro (8:55–9:15)"
+  A: "9:20–9:40",
+  B: "9:45–10:05",
+  C: "8:55–9:15"
 };
 
 const lohkoMap = {
-  "LPS":"Kilpa","HJK/East Sin.":"Kilpa","HJK/Malmi Sin.":"Kilpa","PK-35":"Kilpa",
-  "LPS/Musta":"Haaste","PK-35/Punainen":"Haaste","MPS":"Haaste","HPS/Vihreä":"Haaste",
-  "LPS/Vihreä":"Harraste","HPS/Valkoinen":"Harraste","PK-35/Musta":"Harraste","HJK/Malmi Kelt.":"Harraste"
+  "LPS":"A","HJK/East Sin.":"A","HJK/Malmi Sin.":"A","PK-35":"A",
+  "LPS/Musta":"B","PK-35/Punainen":"B","MPS":"B","HPS/Vihreä":"B",
+  "LPS/Vihreä":"C","HPS/Valkoinen":"C","PK-35/Musta":"C","HJK/Malmi Kelt.":"C"
 };
 
 function buildSchedule(filter) {
   const container = document.getElementById('schedule-container');
   container.innerHTML = '';
   schedule.forEach(slot => {
-    const visibleGames = filter === 'kaikki' ? slot.pelit : slot.pelit.filter(p => p.lohko === filter);
-    if (visibleGames.length === 0) return;
+    const pelit = filter === 'kaikki' ? slot.pelit : slot.pelit.filter(p => p.lohko === filter);
+    if (pelit.length === 0) return;
     const block = document.createElement('div');
     block.className = 'slot-block';
     const hdr = document.createElement('div');
     hdr.className = 'slot-header';
     hdr.innerHTML = `<span>${slot.vuoro}</span><span>${slot.aika}</span>`;
     block.appendChild(hdr);
-    visibleGames.forEach(p => {
+    pelit.forEach(p => {
       const row = document.createElement('div');
       row.className = 'match-row';
       row.innerHTML = `
@@ -514,7 +471,7 @@ function renderTeam(team) {
   games.sort((a,b) => a.vuoro.localeCompare(b.vuoro));
 
   let html = `<div class="team-schedule">
-    <div class="team-header">${team} &nbsp;<small style="font-weight:400;opacity:.6">${lohko}</small></div>`;
+    <div class="team-header">${team} &nbsp;<small style="font-weight:400;opacity:.6">Lohko ${lohko}</small></div>`;
   games.forEach(g => {
     html += `<div class="team-game-row">
       <span class="time">${g.aika}</span>
