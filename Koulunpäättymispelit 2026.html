@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Koulunpäättymispelit 2026 — LPS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green:       #00843D;
+    --green-deep:  #00582a;
+    --green-bright:#1aa658;
+    --green-soft:  #e8f3ec;
+    --green-mist:  #eef6f0;
+    --ink:         #1c1c1a;
+    --ink-2:       #2a2a26;
+    --ink-soft:    #4a4a44;
+    --paper:       #f6f4ef;
+    --paper-2:     #fffdf8;
+    --paper-warm:  #efeadd;
+    --rule:        #e3ddcd;
+    --rule-soft:   #ede6d4;
+    --muted:       #8a8472;
+    --sun:         #f0b429;
+    --radius:      14px;
+    --radius-sm:   8px;
+    --shadow-card: 0 1px 0 rgba(28,28,26,.03), 0 8px 24px -16px rgba(28,28,26,.15);
+
+    --display: "Bricolage Grotesque", Georgia, serif;
+    --sans:    "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a { color: inherit; }
+
+  /* ─── Header ─────────────────────────────────────────── */
+  header {
+    position: relative;
+    background: var(--ink);
+    color: #fff;
+    padding: 2.25rem 1.25rem 2rem;
+    text-align: center;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  /* warm sunlit glow */
+  header::before {
+    content: "";
+    position: absolute;
+    inset: -40% -10% auto -10%;
+    height: 80%;
+    background: radial-gradient(ellipse at 50% 0%, rgba(240,180,41,.18), transparent 60%);
+    z-index: -1;
+  }
+  /* green ground line */
+  header::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 6px;
+    background:
+      linear-gradient(90deg, var(--green) 0 25%, var(--green-bright) 25% 50%, var(--green) 50% 75%, var(--green-bright) 75% 100%);
+    background-size: 64px 6px;
+  }
+
+  .header-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .9rem;
+  }
+  .crest {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    font-family: var(--sans);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.7);
+  }
+  .crest img {
+    height: 30px;
+    width: auto;
+    display: block;
+  }
+  .crest .dot {
+    width: 4px; height: 4px; border-radius: 999px;
+    background: var(--green-bright);
+  }
+  header h1 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(2.15rem, 8vw, 3.3rem);
+    line-height: 1.02;
+    letter-spacing: -.02em;
+    font-variation-settings: "opsz" 72;
+    text-wrap: balance;
+  }
+  header h1 .year {
+    display: inline-block;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--green-bright);
+    margin-left: .15em;
+  }
+  .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: .55rem .9rem;
+    font-size: .85rem;
+    color: rgba(255,255,255,.78);
+    font-weight: 500;
+  }
+  .header-meta .sep {
+    width: 3px; height: 3px; border-radius: 999px;
+    background: rgba(255,255,255,.35);
+  }
+  .header-tag {
+    margin-top: .25rem;
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1rem;
+    color: rgba(255,255,255,.6);
+    font-variation-settings: "opsz" 24;
+  }
+
+  /* ─── Nav ─────────────────────────────────────────── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(246,244,239,.92);
+    backdrop-filter: saturate(140%) blur(10px);
+    -webkit-backdrop-filter: saturate(140%) blur(10px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav-scroll {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    gap: .15rem;
+    padding: .35rem .6rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-scroll::-webkit-scrollbar { display: none; }
+  nav button {
+    background: none;
+    border: none;
+    color: var(--ink-soft);
+    font-family: var(--sans);
+    font-size: .85rem;
+    font-weight: 600;
+    padding: .7rem .85rem;
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+    transition: color .15s;
+    letter-spacing: -.005em;
+  }
+  nav button::after {
+    content: "";
+    position: absolute;
+    left: .85rem; right: .85rem; bottom: 6px;
+    height: 2px;
+    background: transparent;
+    border-radius: 2px;
+    transition: background .15s;
+  }
+  nav button:hover { color: var(--ink); }
+  nav button.active { color: var(--ink); }
+  nav button.active::after { background: var(--green); }
+
+  /* ─── Main / Sections ─────────────────────────────── */
+  main { max-width: 720px; margin: 0 auto; padding: 1.75rem 1.1rem 3rem; }
+  .section { display: none; animation: fadeUp .35s ease both; }
+  .section.visible { display: block; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-intro {
+    margin-bottom: 1.4rem;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: .35rem;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 18px; height: 1px;
+    background: var(--green);
+  }
+  .section-intro h2 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(1.55rem, 5vw, 1.95rem);
+    line-height: 1.1;
+    letter-spacing: -.02em;
+    color: var(--ink);
+    font-variation-settings: "opsz" 48;
+    margin-bottom: .35rem;
+  }
+  .section-intro p {
+    color: var(--ink-soft);
+    font-size: .92rem;
+    max-width: 56ch;
+  }
+
+  /* generic card (used in Joukkueeni) */
+  .card {
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-card);
+  }
+  .card-title {
+    font-family: var(--display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    margin-bottom: .2rem;
+    font-variation-settings: "opsz" 24;
+  }
+  .card p {
+    color: var(--ink-soft);
+    font-size: .9rem;
+  }
+
+  /* ─── Filter bar ──────────────────────────────────── */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+    align-items: center;
+    margin-bottom: 1.4rem;
+    padding: .5rem;
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    box-shadow: var(--shadow-card);
+  }
+  .filter-bar label {
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 .55rem 0 .75rem;
+  }
+  .chip {
+    border: none;
+    background: transparent;
+    border-radius: 999px;
+    padding: .45rem 1rem;
+    font-family: var(--sans);
+    font-size: .82rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--ink-soft);
+    transition: background .15s, color .15s;
+    letter-spacing: -.005em;
+  }
+  .chip:hover { color: var(--ink); background: var(--rule-soft); }
+  .chip.active {
+    background: var(--ink);
+    color: #fff;
+  }
+
+  /* ─── Schedule blocks ─────────────────────────────── */
+  .slot-block {
+    margin-bottom: 1.25rem;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    background: var(--paper-2);
+    box-shadow: var(--shadow-card);
+  }
+  .slot-header {
+    background: var(--ink);
+    color: #fff;
+    padding: .85rem 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    border-radius: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    border-left: none;
+    position: relative;
+  }
+  .slot-header::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--green);
+  }
+  .slot-header > span:first-child {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: -.01em;
+    font-variation-settings: "opsz" 24;
+  }
+  .slot-header > span:last-child {
+    font-family: var(--sans);
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    font-size: .85rem;
+    color: rgba(255,255,255,.78);
+    letter-spacing: .01em;
+  }
+  .match-row {
+    background: var(--paper-2);
+    border: none;
+    border-top: 1px solid var(--rule-soft);
+    padding: .8rem 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    transition: background .12s;
+  }
+  .match-row:hover { background: var(--paper); }
+  .match-row:last-child { border-radius: 0; }
+  .field-badge {
+    min-width: 60px;
+    text-align: center;
+    font-family: var(--sans);
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: .35rem .45rem;
+    border-radius: 6px;
+    background: var(--green-soft);
+    color: var(--green-deep);
+    flex-shrink: 0;
+    border: 1px solid #cfe3d6;
+    line-height: 1.15;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .field-badge strong {
+    font-size: 1rem;
+    letter-spacing: -.01em;
+    font-weight: 800;
+    color: var(--green-deep);
+  }
+  .field-badge small {
+    font-size: .58rem;
+    opacity: .8;
+    font-weight: 700;
+  }
+  .match-teams {
+    flex: 1;
+    font-size: .95rem;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -.005em;
+    line-height: 1.3;
+  }
+  .match-teams span {
+    color: var(--muted);
+    font-weight: 500;
+    font-size: .78rem;
+    text-transform: lowercase;
+    margin: 0 .25rem;
+    font-style: italic;
+  }
+
+  /* ─── Joukkueeni ──────────────────────────────────── */
+  select {
+    width: 100%;
+    padding: .85rem 1rem;
+    padding-right: 2.4rem;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    font-size: .95rem;
+    font-family: var(--sans);
+    font-weight: 600;
+    background: var(--paper-2);
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+    box-shadow: var(--shadow-card);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--ink) 50%),
+      linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+    background-position:
+      calc(100% - 18px) 50%,
+      calc(100% - 13px) 50%;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+  }
+  select:focus { outline: 2px solid var(--green); outline-offset: 2px; }
+
+  .team-schedule {
+    margin-top: 1.25rem;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    background: var(--paper-2);
+    box-shadow: var(--shadow-card);
+  }
+  .team-header {
+    background: var(--ink);
+    color: #fff;
+    border-radius: 0;
+    padding: 1.1rem 1.25rem;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.25rem;
+    letter-spacing: -.01em;
+    font-variation-settings: "opsz" 32;
+    border-left: none;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: .6rem;
+  }
+  .team-header::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--green);
+  }
+  .team-header small {
+    font-family: var(--sans);
+    font-style: normal;
+    font-weight: 600;
+    font-size: .7rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--green-bright);
+    opacity: 1;
+    background: rgba(26,166,88,.15);
+    padding: .25rem .55rem;
+    border-radius: 999px;
+  }
+  .team-game-row {
+    background: var(--paper-2);
+    border: none;
+    border-top: 1px solid var(--rule-soft);
+    padding: .85rem 1.25rem;
+    display: grid;
+    grid-template-columns: minmax(78px, auto) minmax(80px, auto) 1fr;
+    gap: .85rem;
+    align-items: center;
+    font-size: .92rem;
+  }
+  .team-game-row:last-of-type { border-radius: 0; }
+  .team-game-row .time  {
+    color: var(--ink);
+    font-size: .82rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -.01em;
+  }
+  .team-game-row .field {
+    font-weight: 700;
+    font-size: .78rem;
+    color: var(--green-deep);
+    background: var(--green-soft);
+    padding: .25rem .55rem;
+    border-radius: 6px;
+    text-align: center;
+    border: 1px solid #cfe3d6;
+    letter-spacing: -.005em;
+  }
+  .team-game-row > span:last-child {
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -.005em;
+  }
+  .team-break {
+    margin-top: .85rem;
+    background: var(--green-soft);
+    border: 1px solid #cfe3d6;
+    border-radius: var(--radius);
+    padding: .9rem 1.1rem;
+    font-size: .9rem;
+    color: var(--green-deep);
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    font-weight: 600;
+  }
+  .team-break::before {
+    content: "☀";
+    font-size: 1.2rem;
+    color: var(--sun);
+  }
+
+  /* ─── Info blocks ─────────────────────────────────── */
+  .info-block {
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 1.4rem 1.4rem 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-card);
+  }
+  .info-block h3 {
+    font-family: var(--display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    font-variation-settings: "opsz" 24;
+    margin-bottom: .7rem;
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--ink);
+  }
+  .info-icon {
+    width: 32px; height: 32px;
+    border-radius: 999px;
+    background: var(--green-soft);
+    color: var(--green-deep);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .info-icon svg { width: 18px; height: 18px; }
+  .info-block p, .info-block li {
+    color: var(--ink-soft);
+    font-size: .92rem;
+    margin-bottom: .35rem;
+    line-height: 1.55;
+  }
+  .info-block p strong, .info-block li strong { color: var(--ink); font-weight: 600; }
+  .info-block ul { padding-left: 1.2rem; list-style: none; }
+  .info-block ul li {
+    position: relative;
+    padding-left: .25rem;
+  }
+  .info-block ul li::before {
+    content: "";
+    position: absolute;
+    left: -.95rem;
+    top: .65rem;
+    width: 5px; height: 5px;
+    border-radius: 999px;
+    background: var(--green);
+  }
+  .map-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    margin-top: .75rem;
+    background: var(--ink);
+    color: #fff;
+    text-decoration: none;
+    padding: .65rem 1.1rem;
+    border-radius: 999px;
+    font-size: .85rem;
+    font-weight: 600;
+    transition: background .15s, transform .15s;
+    letter-spacing: -.005em;
+  }
+  .map-link:hover { background: var(--green-deep); transform: translateY(-1px); }
+  .map-link::after {
+    content: "→";
+    font-weight: 500;
+  }
+
+  .img-full { margin-top: 1rem; }
+  .img-full img, .img-grid img {
+    width: 100%;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--rule);
+    display: block;
+  }
+  .img-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .75rem;
+    margin-top: .75rem;
+  }
+  .img-caption {
+    margin-top: .5rem;
+    font-size: .78rem;
+    color: var(--muted);
+    font-style: italic;
+    text-align: center;
+  }
+
+  .phone-link {
+    color: var(--green) !important;
+    text-decoration: none;
+    font-weight: 700;
+    border-bottom: 1px dashed var(--green);
+  }
+  .phone-link:hover { color: var(--green-deep) !important; border-color: var(--green-deep); }
+
+  /* Buffa hero card */
+  .buffa-hero {
+    background: linear-gradient(180deg, #f4faf6 0%, var(--green-soft) 100%);
+    border-color: #cfe3d6;
+    position: relative;
+    overflow: hidden;
+  }
+  .buffa-hero::before {
+    content: "";
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 110px; height: 110px;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(240,180,41,.45), transparent 65%);
+    pointer-events: none;
+  }
+  .buffa-hero h3 { color: var(--green-deep); }
+  .buffa-hero p  { color: var(--green-deep); opacity: .85; }
+
+  /* ─── Footer ──────────────────────────────────────── */
+  footer {
+    text-align: center;
+    font-size: .8rem;
+    color: var(--muted);
+    padding: 2rem 1rem 2.5rem;
+    border-top: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  footer .heart { color: var(--green); }
+  footer a { color: var(--ink); text-decoration: none; font-weight: 600; border-bottom: 1px solid var(--rule); }
+  footer a:hover { border-color: var(--green); }
+
+  /* ─── Mobile ──────────────────────────────────────── */
+  @media (max-width: 540px) {
+    header { padding: 1.75rem 1rem 1.5rem; }
+    main { padding: 1.25rem .9rem 2.5rem; }
+    .info-block { padding: 1.2rem 1.1rem 1.3rem; }
+    .match-row { padding: .75rem .85rem; gap: .7rem; }
+    .field-badge { min-width: 54px; }
+    .team-game-row {
+      grid-template-columns: 1fr;
+      gap: .35rem;
+      padding: .85rem 1.1rem;
+    }
+    .team-game-row .field { justify-self: start; padding: .2rem .55rem; font-size: .72rem; }
+    .filter-bar { padding: .4rem; }
+    .filter-bar label { padding-left: .6rem; padding-right: .35rem; }
+    .chip { padding: .4rem .8rem; font-size: .8rem; }
+    .slot-header { padding: .75rem .95rem; }
+    .slot-header > span:first-child { font-size: 1rem; }
+    .header-meta { font-size: .8rem; gap: .35rem .65rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="crest">
+      <img src="https://laajasalonpalloseura.fi/wp-content/uploads/2021/11/LPS-LOGO-ILMAN-TAUSTAA.png" alt="LPS" />
+      <span class="dot"></span>
+      <span>Laajasalon Palloseura</span>
+    </div>
+    <h1>Koulun&shy;päättymispelit <span class="year">’26</span></h1>
+    <div class="header-meta">
+      <span>Su 31.5.2026</span>
+      <span class="sep"></span>
+      <span>Saari Areena</span>
+      <span class="sep"></span>
+      <span>Laajasalo</span>
+    </div>
+    <div class="header-tag">Eka kouluvuosi maalissa — pelataan kesä käyntiin.</div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-scroll">
+    <button class="active" onclick="showTab('ohjelma', this)">Otteluohjelma</button>
+    <button onclick="showTab('joukkue', this)">Joukkueeni</button>
+    <button onclick="showTab('info', this)">Parkkeeraus ja julkinen liikenne</button>
+    <button onclick="showTab('buffa', this)">Buffa</button>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ══ OTTELUOHJELMA ══ -->
+  <section id="ohjelma" class="section visible">
+    <div class="section-intro">
+      <div class="eyebrow">Otteluohjelma</div>
+      <h2>12 joukkuetta, 18 peliä!</h2>
+      <p>Ottelut pelataan sunnuntaina 31.5. klo 8.30 alkaen Saari Areenalla.
+Suodata oman lohkon pelit alta.</p>
+    </div>
+
+    <div class="filter-bar">
+      <label>Lohko</label>
+      <button class="chip active" onclick="filterLohko('kaikki', this)">Kaikki</button>
+      <button class="chip" onclick="filterLohko('A', this)">A</button>
+      <button class="chip" onclick="filterLohko('B', this)">B</button>
+      <button class="chip" onclick="filterLohko('C', this)">C</button>
+    </div>
+    <div id="schedule-container"></div>
+  </section>
+
+  <!-- ══ JOUKKUEENI ══ -->
+  <section id="joukkue" class="section">
+    <div class="section-intro">
+      <div class="eyebrow">Joukkueeni</div>
+      <h2>Valitse oma joukkue.</h2>
+      <p>Näytetään kaikki teidän pelinne aikajärjestyksessä — ja milloin on lohkon tauko.</p>
+    </div>
+
+    <select id="team-select" onchange="renderTeam(this.value)" aria-label="Valitse joukkue">
+      <option value="">— Valitse joukkue —</option>
+      <optgroup label="Lohko A">
+        <option>LPS</option>
+        <option>HJK/East Sin.</option>
+        <option>HJK/Malmi Sin.</option>
+        <option>PK-35</option>
+      </optgroup>
+      <optgroup label="Lohko B">
+        <option>LPS/Musta</option>
+        <option>PK-35/Punainen</option>
+        <option>MPS</option>
+        <option>HPS/Vihreä</option>
+      </optgroup>
+      <optgroup label="Lohko C">
+        <option>LPS/Vihreä</option>
+        <option>HPS/Valkoinen</option>
+        <option>PK-35/Musta</option>
+        <option>HJK/Malmi Kelt.</option>
+      </optgroup>
+    </select>
+    <div id="team-output"></div>
+  </section>
+
+  <!-- ══ PARKKEERAUS ══ -->
+  <section id="info" class="section">
+    <div class="section-intro">
+      <div class="eyebrow">Saapuminen</div>
+      <h2>Näin löydät perille.</h2>
+      <p>Parkki, bussit ja yhteystiedot yhdessä paikassa. Tervetuloa Laajasaloon!</p>
+    </div>
+
+    <div class="info-block">
+      <h3>
+        <span class="info-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-7-7.58-7-13a7 7 0 0 1 14 0c0 5.42-7 13-7 13Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        </span>
+        Kenttäalue
+      </h3>
+      <p><strong>Saari Areena</strong><br>Sarvastonkaari 23, Helsinki</p>
+      <a class="map-link" href="https://maps.app.goo.gl/RTGj2quXRZsoRh187" target="_blank">Avaa kartalla</a>
+    </div>
+
+    <div class="info-block">
+      <h3>
+        <span class="info-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 17V7h4a3 3 0 0 1 0 6H9"/></svg>
+        </span>
+        Parkkeeraus
+      </h3>
+      <p>Saapuminen autolla <strong>Laajasalontieltä</strong> — seuraa kartan sinistä reittiä.</p>
+      <p style="margin-top:.6rem"><strong>Turnausparkkialue:</strong><br>
+      Laajasalon peruskoulun piha<br>
+      Holmanmoisionpolku 1</p>
+      <div class="img-full">
+        <img src="parkki_kartta.jpg?v=1" alt="Saapumiskartta Saari Areenalle" />
+        <div class="img-caption">Saapumisreitti Laajasalontieltä</div>
+      </div>
+      <div class="img-full">
+        <img src="parkki_piha.jpg?v=1" alt="Turnausparkkialue Laajasalon peruskoulun pihalla" />
+        <div class="img-caption">Pysäköinti koulun pihalla</div>
+      </div>
+      <a class="map-link" href="https://maps.google.com/?q=Holmanmoisionpolku+1,+Helsinki" target="_blank">Parkkialue kartalla</a>
+    </div>
+
+    <div class="info-block">
+      <h3>
+        <span class="info-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14V8a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v9Z"/><path d="M5 12h14"/><circle cx="8" cy="19" r="1.6"/><circle cx="16" cy="19" r="1.6"/></svg>
+        </span>
+        Julkinen liikenne
+      </h3>
+      <p>Lähimmät bussipysäkit kentälle:</p>
+      <ul>
+        <li>Linjat <strong>84, 85, 86, 87, 88</strong> — pysäkki Laajasalontien varrella</li>
+        <li>Linja <strong>89</strong> — pysäkki lähellä Reposalmentietä</li>
+      </ul>
+      <a class="map-link" href="https://reittiopas.hsl.fi/reitti//-::1.3750591!25.0580401!Sarvastonkaari%2023%2C%20Helsinki" target="_blank">Avaa Reittiopas</a>
+    </div>
+
+    <div class="info-block">
+      <h3>
+        <span class="info-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 6 6L15 14l5 2v3a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>
+        </span>
+        Yhteystiedot
+      </h3>
+      <p>Kysy rohkeasti, jos jokin mietityttää.</p>
+      <p style="margin-top:.4rem"><strong>Janne Järvinen</strong> · LPS<br>
+      <a href="tel:0443465867" class="phone-link">044 346 5867</a></p>
+    </div>
+  </section>
+
+  <!-- ══ BUFFA ══ -->
+  <section id="buffa" class="section">
+    <div class="section-intro">
+      <div class="eyebrow">Buffa</div>
+      <h2>Eväät pelien välissä.</h2>
+      <p>Buffa pyörii talkoovoimin koko turnauksen ajan. Tervetuloa tauolle!</p>
+    </div>
+
+    <div class="info-block buffa-hero">
+      <h3>
+        <span class="info-icon" style="background:rgba(255,255,255,.7)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16"/><path d="M5 11a7 7 0 0 1 14 0"/><path d="M3 15h18"/><path d="M5 19h14"/></svg>
+        </span>
+        Buffa on auki koko päivän
+      </h3>
+      <p>Löydät buffan <strong>kentän 1 tuntumasta</strong> — pistäydy hakemassa eväät pelien välissä.</p>
+      <div class="img-full">
+        <img src="buffa1.jpeg?v=1" alt="Buffa" />
+      </div>
+    </div>
+
+    <div class="info-block">
+      <h3>
+        <span class="info-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8Z"/><path d="M17 9h2a2 2 0 0 1 0 4h-2"/><path d="M8 3v2M11 3v2M14 3v2"/></svg>
+        </span>
+        Tarjolla
+      </h3>
+      <ul>
+        <li>Kahvi, tee ja kylmät juomat</li>
+        <li>Makeat ja suolaiset herkut</li>
+      </ul>
+    </div>
+
+    <div class="info-block">
+      <h3>
+        <span class="info-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h3"/></svg>
+        </span>
+        Maksaminen
+      </h3>
+      <p>Helpoiten <strong>MobilePay</strong>illa, mutta myös käteinen käy.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div>Koulunpäättymispelit 2026 · järjestää <a href="https://laajasalonpalloseura.fi" target="_blank">Laajasalon Palloseura</a></div>
+  <div style="margin-top:.3rem">Pelataan reilusti — <span class="heart">♥</span> hyvällä mielellä.</div>
+</footer>
+
+<script>
+const schedule = [
+  {vuoro:"1. vuoro", aika:"8:30–8:50", pelit:[
+    {t1:"LPS/Vihreä",      t2:"HPS/Valkoinen",   lohko:"C", kentta:1},
+    {t1:"HJK/Malmi Sin.",  t2:"PK-35",           lohko:"A", kentta:2},
+    {t1:"LPS",             t2:"HJK/East Sin.",   lohko:"A", kentta:3},
+    {t1:"PK-35/Musta",     t2:"HJK/Malmi Kelt.", lohko:"C", kentta:4},
+  ]},
+  {vuoro:"2. vuoro", aika:"8:55–9:15", pelit:[
+    {t1:"LPS/Musta",       t2:"PK-35/Punainen",  lohko:"B", kentta:1},
+    {t1:"HJK/East Sin.",   t2:"PK-35",           lohko:"A", kentta:2},
+    {t1:"LPS",             t2:"HJK/Malmi Sin.",  lohko:"A", kentta:3},
+    {t1:"MPS",             t2:"HPS/Vihreä",      lohko:"B", kentta:4},
+  ]},
+  {vuoro:"3. vuoro", aika:"9:20–9:40", pelit:[
+    {t1:"LPS/Musta",       t2:"MPS",             lohko:"B", kentta:1},
+    {t1:"PK-35/Punainen",  t2:"HPS/Vihreä",      lohko:"B", kentta:2},
+    {t1:"LPS/Vihreä",      t2:"PK-35/Musta",     lohko:"C", kentta:3},
+    {t1:"HPS/Valkoinen",   t2:"HJK/Malmi Kelt.", lohko:"C", kentta:4},
+  ]},
+  {vuoro:"4. vuoro", aika:"9:45–10:05", pelit:[
+    {t1:"LPS/Vihreä",      t2:"HJK/Malmi Kelt.", lohko:"C", kentta:1},
+    {t1:"HJK/East Sin.",   t2:"HJK/Malmi Sin.",  lohko:"A", kentta:2},
+    {t1:"LPS",             t2:"PK-35",           lohko:"A", kentta:3},
+    {t1:"HPS/Valkoinen",   t2:"PK-35/Musta",     lohko:"C", kentta:4},
+  ]},
+  {vuoro:"5. vuoro", aika:"10:10–10:30", pelit:[
+    {t1:"LPS/Musta",       t2:"HPS/Vihreä",      lohko:"B", kentta:1},
+    {t1:"PK-35/Punainen",  t2:"MPS",             lohko:"B", kentta:2},
+  ]},
+];
+
+const tauko = {
+  A: "9:20–9:40",
+  B: "9:45–10:05",
+  C: "8:55–9:15"
+};
+
+const lohkoMap = {
+  "LPS":"A","HJK/East Sin.":"A","HJK/Malmi Sin.":"A","PK-35":"A",
+  "LPS/Musta":"B","PK-35/Punainen":"B","MPS":"B","HPS/Vihreä":"B",
+  "LPS/Vihreä":"C","HPS/Valkoinen":"C","PK-35/Musta":"C","HJK/Malmi Kelt.":"C"
+};
+
+function buildSchedule(filter) {
+  const container = document.getElementById('schedule-container');
+  container.innerHTML = '';
+  schedule.forEach(slot => {
+    const pelit = filter === 'kaikki' ? slot.pelit : slot.pelit.filter(p => p.lohko === filter);
+    if (pelit.length === 0) return;
+    const block = document.createElement('div');
+    block.className = 'slot-block';
+    const hdr = document.createElement('div');
+    hdr.className = 'slot-header';
+    hdr.innerHTML = `<span>${slot.vuoro}</span><span>${slot.aika}</span>`;
+    block.appendChild(hdr);
+    pelit.forEach(p => {
+      const row = document.createElement('div');
+      row.className = 'match-row';
+      row.innerHTML = `
+        <div class="field-badge"><small>Kenttä</small><strong>${p.kentta}</strong></div>
+        <div class="match-teams">${p.t1} <span>vs</span> ${p.t2}</div>
+      `;
+      block.appendChild(row);
+    });
+    container.appendChild(block);
+  });
+}
+
+function filterLohko(lohko, btn) {
+  document.querySelectorAll('.filter-bar .chip').forEach(c => { c.className = 'chip'; });
+  btn.className = 'chip active';
+  buildSchedule(lohko);
+}
+
+function renderTeam(team) {
+  const out = document.getElementById('team-output');
+  if (!team) { out.innerHTML = ''; return; }
+  const lohko = lohkoMap[team];
+  const games = [];
+  schedule.forEach(slot => {
+    slot.pelit.forEach(p => {
+      if (p.t1 === team || p.t2 === team) {
+        games.push({aika: slot.aika, kentta: p.kentta, opp: p.t1 === team ? p.t2 : p.t1, vuoro: slot.vuoro});
+      }
+    });
+  });
+  games.sort((a,b) => a.vuoro.localeCompare(b.vuoro));
+
+  let html = `<div class="team-schedule">
+    <div class="team-header">${team} <small>Lohko ${lohko}</small></div>`;
+  games.forEach(g => {
+    html += `<div class="team-game-row">
+      <span class="time">${g.aika}</span>
+      <span class="field">Kenttä ${g.kentta}</span>
+      <span>vs ${g.opp}</span>
+    </div>`;
+  });
+  html += `</div>
+  <div class="team-break">Tauko klo ${tauko[lohko]}</div>`;
+  out.innerHTML = html;
+}
+
+function showTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  document.getElementById(id).classList.add('visible');
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+buildSchedule('kaikki');
+</script>
+</body>
+</html>
