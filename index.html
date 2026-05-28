@@ -665,6 +665,11 @@
   footer a:hover { border-color: var(--green); }
 
   /* ─── Mobile ──────────────────────────────────────── */
+  .nav-short { display: none; }
+  @media (max-width: 540px) {
+    .nav-long  { display: none; }
+    .nav-short { display: inline; }
+  }
   @media (max-width: 540px) {
     header { padding: 1.75rem 1rem 1.5rem; }
     main { padding: 1.25rem .9rem 2.5rem; }
@@ -709,9 +714,9 @@
 
 <nav>
   <div class="nav-scroll">
-    <button class="active" onclick="showTab('ohjelma', this)">Otteluohjelma</button>
+    <button class="active" onclick="showTab('ohjelma', this)"><span class="nav-long">Otteluohjelma</span><span class="nav-short">Ohjelma</span></button>
     <button onclick="showTab('joukkue', this)">Joukkueeni</button>
-    <button onclick="showTab('info', this)">Parkkeeraus ja julkinen liikenne</button>
+    <button onclick="showTab('info', this)"><span class="nav-long">Parkkeeraus ja julkinen liikenne</span><span class="nav-short">Parkki &amp; bussit</span></button>
     <button onclick="showTab('buffa', this)">Buffa</button>
   </div>
 </nav>
